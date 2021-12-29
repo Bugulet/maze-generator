@@ -11,7 +11,8 @@ public class ImageModificationTest : MonoBehaviour
     {
         cTex = new Texture2D(100, 100);
         cTex.filterMode = FilterMode.Point;
-        cTex.SetPixel(10, 10, Color.red);
+        List<MazeCell> maze= MazeGenerator.GenerateMaze(100, 100);
+        cTex.SetPixels(0,0,100, 100, maze.Select(x => x.WasCellVisited() ? Color.black : Color.white).ToArray());
         cTex.Apply();
         GetComponent<RawImage>().texture = cTex;
     }
