@@ -7,12 +7,35 @@ public class ImageModificationTest : MonoBehaviour
 {
     // Start is called before the first frame update
     Texture2D cTex;
+   public GameObject up,down,left,right;
     void Start()
     {
-        cTex = new Texture2D(100, 100);
+        int width = 10, height = 10;
+        cTex = new Texture2D(400,400);
         cTex.filterMode = FilterMode.Point;
-        List<MazeCell> maze= MazeGenerator.GenerateMaze(100, 100);
-        cTex.SetPixels(0,0,100, 100, maze.Select(x => x.WasCellVisited() ? Color.black : Color.white).ToArray());
+        MazeGenerator mazeGenerator = new MazeGenerator(width,height);
+        mazeGenerator.GenerateMaze();
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                MazeCell currentCell= mazeGenerator.GetCell(i, j);
+                ////cTex.SetPixel(currentCell.x, currentCell.y, currentCell.WasCellVisited() ? Color.white : Color.black);
+                //cTex.SetPixel(currentCell.x , currentCell.y, currentCell.GetWall(Direction.LEFT) ? Color.black : Color.white);
+                ////cTex.SetPixel(currentCell.x * 2 + 1, currentCell.y * 2, currentCell.GetWall(Direction.RIGHT) ? Color.black : Color.white);
+                ////cTex.SetPixel(currentCell.x * 2 , currentCell.y * 2-1, currentCell.GetWall(Direction.UP) ? Color.black : Color.white);
+                ////cTex.SetPixel(currentCell.x * 2 , currentCell.y * 2+1, currentCell.GetWall(Direction.DOWN) ? Color.black : Color.white);
+               if(currentCell.GetWall(Direction.LEFT))
+                Instantiate(left, new Vector3(i, j, 0), Quaternion.identity);
+                if (currentCell.GetWall(Direction.RIGHT))
+                    Instantiate(right, new Vector3(i, j, 0), Quaternion.identity);
+                if (currentCell.GetWall(Direction.UP))
+                    Instantiate(up, new Vector3(i, j, 0), Quaternion.identity);
+                if (currentCell.GetWall(Direction.DOWN))
+                    Instantiate(down, new Vector3(i, j, 0), Quaternion.identity);
+
+            }
+        }
         cTex.Apply();
         GetComponent<RawImage>().texture = cTex;
     }
