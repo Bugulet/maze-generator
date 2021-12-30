@@ -5,11 +5,13 @@ public class MazeGenerator
 {
     private int _mazeWidth, _mazeHeight;
     private List<MazeCell> _mazeCells = new List<MazeCell>();
+    public List<MazeCell> PositionsMoved = new List<MazeCell>();
     public MazeGenerator(int mazeWidth, int mazeHeight)
     {
         _mazeWidth = mazeWidth;
         _mazeHeight = mazeHeight;
     }
+
     public void GenerateMaze()
     {
         //adding default cells to maze
@@ -17,7 +19,7 @@ public class MazeGenerator
         {
             for (int x = 0; x < _mazeWidth; x++)
             {
-                    MazeCell createdCell = new MazeCell(y, x);
+                    MazeCell createdCell = new MazeCell(x,y);
                     _mazeCells.Add(createdCell);
             }
         }
@@ -30,6 +32,7 @@ public class MazeGenerator
         while (stackedCells.Count > 0)
         {
             currentCell = stackedCells.Pop();
+            PositionsMoved.Add(currentCell);
             //stackedCells.Push(currentCell);
             if (HasUnvisitedNeighbours(currentCell))
             {
@@ -39,7 +42,7 @@ public class MazeGenerator
                 //remove wall between the two cells, based on where the neighbour cell is located in respect to the current cell
                 {
                     //check on x axis
-                    if (neighbour.x > currentCell.x)
+                    if ((neighbour.x > currentCell.x))
                     {
                         neighbour.RemoveWall(Direction.LEFT);
                         currentCell.RemoveWall(Direction.RIGHT);
@@ -51,7 +54,7 @@ public class MazeGenerator
                     }
 
                     //check on y axis
-                    if (neighbour.y > currentCell.y)
+                    if ((neighbour.y > currentCell.y))
                     {
                         neighbour.RemoveWall(Direction.DOWN);
                         currentCell.RemoveWall(Direction.UP);
@@ -91,7 +94,11 @@ public class MazeGenerator
         {
             neighbours.Add(_mazeCells[GetIndexFromPosition(cell.x - 1, cell.y)]);
         }
-
+        //down cell
+        if (IsValidPosition(cell.x, cell.y - 1) && !_mazeCells[GetIndexFromPosition(cell.x, cell.y - 1)].WasCellVisited())
+        {
+            neighbours.Add(_mazeCells[GetIndexFromPosition(cell.x, cell.y - 1)]);
+        }
         //right cell
         if (IsValidPosition(cell.x + 1, cell.y) && !_mazeCells[GetIndexFromPosition(cell.x + 1, cell.y)].WasCellVisited())
         {
@@ -104,11 +111,7 @@ public class MazeGenerator
             neighbours.Add(_mazeCells[GetIndexFromPosition(cell.x , cell.y+1)]);
         }
 
-        //down cell
-        if (IsValidPosition(cell.x, cell.y - 1) && !_mazeCells[GetIndexFromPosition(cell.x, cell.y - 1)].WasCellVisited())
-        {
-            neighbours.Add( _mazeCells[GetIndexFromPosition(cell.x , cell.y-1)]);
-        }
+        
 
         return neighbours[UnityEngine.Random.Range(0,neighbours.Count)];
     }

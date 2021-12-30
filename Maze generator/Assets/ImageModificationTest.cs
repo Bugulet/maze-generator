@@ -7,13 +7,14 @@ public class ImageModificationTest : MonoBehaviour
 {
     // Start is called before the first frame update
     Texture2D cTex;
-   public GameObject up,down,left,right;
+   public GameObject up,down,left,right,cube;
+    MazeGenerator mazeGenerator;
     void Start()
     {
         int width = 10, height = 10;
         cTex = new Texture2D(400,400);
         cTex.filterMode = FilterMode.Point;
-        MazeGenerator mazeGenerator = new MazeGenerator(width,height);
+        mazeGenerator = new MazeGenerator(width,height);
         mazeGenerator.GenerateMaze();
         for (int i = 0; i < width; i++)
         {
@@ -39,10 +40,15 @@ public class ImageModificationTest : MonoBehaviour
         cTex.Apply();
         GetComponent<RawImage>().texture = cTex;
     }
-    
+
+    int pos = 0;
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Instantiate(cube, new Vector3(mazeGenerator.PositionsMoved[pos].x, mazeGenerator.PositionsMoved[pos].y, 0), Quaternion.identity);
+            pos++;
+        }
     }
 }
