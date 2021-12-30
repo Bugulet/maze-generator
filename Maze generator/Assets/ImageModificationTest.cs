@@ -11,7 +11,7 @@ public class ImageModificationTest : MonoBehaviour
     MazeGenerator mazeGenerator;
     void Start()
     {
-        int width = 10, height = 10;
+        int width = 250, height = 250;
         cTex = new Texture2D(400,400);
         cTex.filterMode = FilterMode.Point;
         mazeGenerator = new MazeGenerator(width,height);

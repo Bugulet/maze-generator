@@ -42,24 +42,24 @@ public class MazeGenerator
                 //remove wall between the two cells, based on where the neighbour cell is located in respect to the current cell
                 {
                     //check on x axis
-                    if ((neighbour.x > currentCell.x))
+                    if (neighbour.x > currentCell.x)
                     {
                         neighbour.RemoveWall(Direction.LEFT);
                         currentCell.RemoveWall(Direction.RIGHT);
                     }
-                    else
+                    else if (neighbour.x < currentCell.x)
                     {
                         neighbour.RemoveWall(Direction.RIGHT);
                         currentCell.RemoveWall(Direction.LEFT);
                     }
 
                     //check on y axis
-                    if ((neighbour.y > currentCell.y))
+                    if (neighbour.y > currentCell.y)
                     {
                         neighbour.RemoveWall(Direction.DOWN);
                         currentCell.RemoveWall(Direction.UP);
                     }
-                    else
+                    else if (neighbour.y < currentCell.y)
                     {
                         neighbour.RemoveWall(Direction.UP);
                         currentCell.RemoveWall(Direction.DOWN);
