@@ -19,8 +19,8 @@ public class MazeGenerator
         {
             for (int x = 0; x < _mazeWidth; x++)
             {
-                    MazeCell createdCell = new MazeCell(x,y);
-                    _mazeCells.Add(createdCell);
+                MazeCell createdCell = new MazeCell(x, y);
+                _mazeCells.Add(createdCell);
             }
         }
 
@@ -80,9 +80,9 @@ public class MazeGenerator
     private bool HasUnvisitedNeighbours(MazeCell cell)
     {
         return (IsValidPosition(cell.x - 1, cell.y) && !_mazeCells[GetIndexFromPosition(cell.x - 1, cell.y)].WasCellVisited()) ||
-               (IsValidPosition(cell.x + 1, cell.y)  && !_mazeCells[GetIndexFromPosition(cell.x + 1, cell.y)].WasCellVisited()) ||
-               (IsValidPosition(cell.x, cell.y - 1)  && !_mazeCells[GetIndexFromPosition(cell.x, cell.y - 1)].WasCellVisited()) ||
-               (IsValidPosition(cell.x, cell.y + 1)  && !_mazeCells[GetIndexFromPosition(cell.x, cell.y + 1)].WasCellVisited());
+               (IsValidPosition(cell.x + 1, cell.y) && !_mazeCells[GetIndexFromPosition(cell.x + 1, cell.y)].WasCellVisited()) ||
+               (IsValidPosition(cell.x, cell.y - 1) && !_mazeCells[GetIndexFromPosition(cell.x, cell.y - 1)].WasCellVisited()) ||
+               (IsValidPosition(cell.x, cell.y + 1) && !_mazeCells[GetIndexFromPosition(cell.x, cell.y + 1)].WasCellVisited());
     }
 
     private MazeCell GetUnvisitedNeighbour(MazeCell cell)
@@ -108,12 +108,10 @@ public class MazeGenerator
         //up cell
         if (IsValidPosition(cell.x, cell.y + 1) && !_mazeCells[GetIndexFromPosition(cell.x, cell.y + 1)].WasCellVisited())
         {
-            neighbours.Add(_mazeCells[GetIndexFromPosition(cell.x , cell.y+1)]);
+            neighbours.Add(_mazeCells[GetIndexFromPosition(cell.x, cell.y + 1)]);
         }
 
-        
-
-        return neighbours[UnityEngine.Random.Range(0,neighbours.Count)];
+        return neighbours[UnityEngine.Random.Range(0, neighbours.Count)];
     }
 
     public bool IsValidPosition(int x, int y)
