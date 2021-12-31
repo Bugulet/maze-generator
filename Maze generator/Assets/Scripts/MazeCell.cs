@@ -5,7 +5,6 @@ public class MazeCell
     readonly public int x, y;
     private bool _wallUp=true, _wallDown=true, _wallLeft=true, _wallRight=true;
     private bool _visited = false;
-
     public MazeCell(int xPosition, int yPosition)
     {
         x = xPosition;
@@ -16,6 +15,7 @@ public class MazeCell
     {
         _visited = true;
     }
+
     public bool WasCellVisited()
     {
         return _visited;

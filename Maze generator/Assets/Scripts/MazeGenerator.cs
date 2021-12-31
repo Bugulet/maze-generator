@@ -24,16 +24,26 @@ public class MazeGenerator
             }
         }
 
+        //explicit stack, prefer this over the recursive maze generator
         Stack<MazeCell> stackedCells = new Stack<MazeCell>();
+        //just get the first position and start from there
         MazeCell currentCell = _mazeCells[GetIndexFromPosition(0, 0)];
+        //and visit it
         currentCell.VisitCell();
+        
+        //we push it to the stack so we have something to work with in the while loop
         stackedCells.Push(currentCell);
 
+        //do this until we no longer have any unvisited cells
         while (stackedCells.Count > 0)
         {
+            //pop the top cell so we can check it for neighbours
             currentCell = stackedCells.Pop();
+
+            //holding the positions moved in case we expand functionality with step-by-step animations and such, doesnt affect the algorithm
             PositionsMoved.Add(currentCell);
-            //stackedCells.Push(currentCell);
+
+            //if we have any unvisited neighbours we push the current cell to the stack and get one of those neighbours to build the walls between
             if (HasUnvisitedNeighbours(currentCell))
             {
                 stackedCells.Push(currentCell);
@@ -66,19 +76,17 @@ public class MazeGenerator
                     }
                 }
 
+                //mark this cell as visited and push it to the stack
                 neighbour.VisitCell();
                 stackedCells.Push(neighbour);
             }
-            //if (stackedCells.Count > 10)
-            //{
-            //    break;
-            //}
         }
 
     }
 
     private bool HasUnvisitedNeighbours(MazeCell cell)
     {
+        //check all the neighbours, and if those positions are valid
         return (IsValidPosition(cell.x - 1, cell.y) && !_mazeCells[GetIndexFromPosition(cell.x - 1, cell.y)].WasCellVisited()) ||
                (IsValidPosition(cell.x + 1, cell.y) && !_mazeCells[GetIndexFromPosition(cell.x + 1, cell.y)].WasCellVisited()) ||
                (IsValidPosition(cell.x, cell.y - 1) && !_mazeCells[GetIndexFromPosition(cell.x, cell.y - 1)].WasCellVisited()) ||
@@ -111,33 +119,39 @@ public class MazeGenerator
             neighbours.Add(_mazeCells[GetIndexFromPosition(cell.x, cell.y + 1)]);
         }
 
+        //get a random neighbor from all of them
         return neighbours[UnityEngine.Random.Range(0, neighbours.Count)];
     }
 
+    //edge case check
     public bool IsValidPosition(int x, int y)
     {
         return !(x < 0 || x > _mazeWidth - 1 || y < 0 || y > _mazeHeight - 1);
     }
+
+    //simple getter, use position to get an index
     public MazeCell GetCell(int x, int y)
     {
         return _mazeCells[GetIndexFromPosition(x, y)];
     }
 
+    //also simple getter
     public MazeCell GetCell(int index)
     {
         return _mazeCells[index];
     }
 
+    //basic 2d to 1d formula
     private int GetIndexFromPosition(int x, int y)
     {
         return x + _mazeWidth * y;
     }
+
+    //same as above but in reverse
     private (int x, int y) GetPositionFromIndex(int index)
     {
-
         int x = index % _mazeWidth;
         int y = index / _mazeWidth;
-
         return (x, y);
     }
 }
