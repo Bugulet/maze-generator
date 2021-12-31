@@ -6,6 +6,8 @@ public class MazeGenerator
     private int _mazeWidth, _mazeHeight;
     private List<MazeCell> _mazeCells = new List<MazeCell>();
     public List<MazeCell> PositionsMoved = new List<MazeCell>();
+
+    //set the maze width and height at the start
     public MazeGenerator(int mazeWidth, int mazeHeight)
     {
         _mazeWidth = mazeWidth;
