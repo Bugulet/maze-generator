@@ -1,3 +1,4 @@
+//credits to https://gist.github.com/FreyaHolmer/650ecd551562352120445513efa1d952
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
