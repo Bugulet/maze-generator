@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 public class MazeGenerator
 {
+    //we keep this to be used by the entire class afterwards
     private int _mazeWidth, _mazeHeight;
+
+    //along with the generated cells
     private List<MazeCell> _mazeCells = new List<MazeCell>();
+
+    //logging all the moved positions, can be used for step by step visualization
     public List<MazeCell> PositionsMoved = new List<MazeCell>();
 
     //set the maze width and height at the start
@@ -14,6 +19,7 @@ public class MazeGenerator
         _mazeHeight = mazeHeight;
     }
 
+    //main method we'll be using, generated a 2D maze based on height and width
     public void GenerateMaze()
     {
         //adding default cells to maze

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
+//just using this class for easy updating of the slider text values
 public class SliderTextValueSetter : MonoBehaviour
 {
     [SerializeField] private string _addedText;

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 public class MazeVisualiser : MonoBehaviour
 {
+    //expand on this if needed
     enum VisualizationTypeEnum { Pixel, City };
 
     //can't have proper dictionaries (easily) in unity editor so we have to do this
@@ -15,17 +16,21 @@ public class MazeVisualiser : MonoBehaviour
         public GameObject GameObject;
     }
 
+    //set the default to pixel, as that's the main assignment
     [SerializeField] private VisualizationTypeEnum _visualizationType = VisualizationTypeEnum.Pixel;
-    [SerializeField] private int _mazeWidth = 500, _mazeHeight = 500;
+    //tested the pixel with up to 4000x4000 and still works nice
+    [SerializeField] private int _mazeWidth = 250, _mazeHeight = 250;
+    //the UI element we will be chanigng
     [SerializeField] private RawImage _imageComponent;
+    //all the sliders
     [SerializeField] private Slider _widthSlider, _heightSlider, _scaleSlider;
-    
-    //object to spawn for city visualizer
+    //objects to spawn for city visualizer
     [SerializeField] private List<CityObject> _cityObjects;
 
     //the texture we generate and then assign to the raw image
     private Texture2D _mazeTexture;
     
+    //our main class of interest in the assignment
     private MazeGenerator mazeGenerator;
 
     //zoom functionality
@@ -150,7 +155,7 @@ public class MazeVisualiser : MonoBehaviour
                 pixelPosition.x = currentCell.x * 2 + offset.x;
                 pixelPosition.y = currentCell.y * 2 + offset.y;
 
-                //set initial position to the color
+                //set initial position of the cell to the path color
                 _mazeTexture.SetPixel(pixelPosition.x, pixelPosition.y, roadColor);
 
                 if (!currentCell.GetWall(Direction.RIGHT))
